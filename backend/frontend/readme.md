@@ -1,1 +1,0 @@
-"Frontend kodlarç buraya gelecek" 
