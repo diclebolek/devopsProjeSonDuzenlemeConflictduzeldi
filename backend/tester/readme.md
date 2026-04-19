@@ -1,1 +1,0 @@
-"Test kodlarç buraya gelecek" 
