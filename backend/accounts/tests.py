@@ -26,3 +26,25 @@ class RegisterAPITests(TestCase):
         user = User.objects.get(username="newuser")
         self.assertTrue(user.check_password("longpassword1"))
         self.assertTrue(CustomerProfile.objects.filter(user=user).exists())
+
+    def test_register_rejects_short_password(self):
+        url = reverse("auth-register")
+        payload = {
+            "username": "weakuser",
+            "email": "weak@test.com",
+            "password": "123",
+        }
+        r = self.client.post(url, payload, format="json")
+        self.assertEqual(r.status_code, 400)
+
+    def test_login_returns_token_pair(self):
+        User.objects.create_user(username="loginuser", password="longpassword1")
+        url = reverse("token_obtain_pair")
+        r = self.client.post(
+            url,
+            {"username": "loginuser", "password": "longpassword1"},
+            format="json",
+        )
+        self.assertEqual(r.status_code, 200)
+        self.assertIn("access", r.data)
+        self.assertIn("refresh", r.data)

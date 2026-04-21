@@ -17,6 +17,14 @@ class ServiceAPITests(TestCase):
             body="Uzun",
             is_published=True,
         )
+        Service.objects.create(
+            category=cat,
+            title="Yayin Disi",
+            slug="yayin-disi",
+            short_description="Kısa",
+            body="Uzun",
+            is_published=False,
+        )
 
     def test_list_returns_published_service(self):
         url = reverse("service-list")
@@ -31,3 +39,14 @@ class ServiceAPITests(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(r.data["title"], "Trafik")
         self.assertIn("body", r.data)
+
+    def test_list_hides_unpublished(self):
+        url = reverse("service-list")
+        r = self.client.get(url)
+        slugs = [item["slug"] for item in r.data]
+        self.assertNotIn("yayin-disi", slugs)
+
+    def test_detail_returns_404_for_unpublished(self):
+        url = reverse("service-detail", kwargs={"slug": "yayin-disi"})
+        r = self.client.get(url)
+        self.assertEqual(r.status_code, 404)

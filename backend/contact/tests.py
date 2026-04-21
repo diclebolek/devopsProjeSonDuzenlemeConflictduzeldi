@@ -36,3 +36,17 @@ class ContactAPITests(TestCase):
         self.assertEqual(ContactMessage.objects.count(), 1)
         msg = ContactMessage.objects.get()
         self.assertEqual(msg.name, "Ali")
+
+    def test_contact_message_invalid_payload(self):
+        url = reverse("contact-message-create")
+        payload = {"name": "", "email": "wrong-mail", "message": ""}
+        r = self.client.post(url, payload, format="json")
+        self.assertEqual(r.status_code, 400)
+        self.assertEqual(ContactMessage.objects.count(), 0)
+
+    def test_contact_page_creates_default_profile_when_missing(self):
+        ContactSiteProfile.objects.all().delete()
+        url = reverse("contact-page")
+        r = self.client.get(url)
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(ContactSiteProfile.objects.count(), 1)
