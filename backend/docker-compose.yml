@@ -27,6 +27,7 @@ services:
       POSTGRES_DB: insucom
       POSTGRES_USER: insucom
       POSTGRES_PASSWORD: insucom
+      POSTGRES_SSLMODE: disable
       DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,web
       DJANGO_DEBUG: "true"
       DJANGO_SECRET_KEY: docker-dev-not-for-production-use-long-secret-in-real-env-9f1a
