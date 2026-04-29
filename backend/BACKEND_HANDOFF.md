@@ -247,3 +247,55 @@ Bu kisimda kritik alan isimleri birebir yazilmistir. Frontend bu isimleri oldugu
 - Degisiklik zorunluysa frontend ekibine once bildirilip versiyonlama yapilmalidir.
 - Frontend tamamlanana kadar `seed_demo_data` sadece veri icerigi gunceller, field adlarini degistirmez.
 
+## 14) Frontend Icin Hazir Demo Hesap ve Test Verisi
+
+- Demo login:
+  - `username`: `demo`
+  - `password`: `Demo12345!`
+- Demo data yukleme komutu:
+  - `.\.venv\Scripts\python.exe manage.py seed_demo_data`
+- Frontend entegrasyonda once bu hesapla login test edilmelidir.
+
+## 15) Ortam Senaryolari (Lokal Python vs Docker)
+
+### A) Lokal Python (runserver)
+- Backend:
+  - `.\.venv\Scripts\python.exe manage.py runserver`
+- API base URL:
+  - `http://127.0.0.1:8000/api`
+- DB:
+  - `.env` degerlerine gore (Azure/Postgres veya local)
+
+### B) Docker Compose
+- Komut:
+  - `docker compose up --build`
+- API base URL:
+  - `http://127.0.0.1:8000/api`
+- DB:
+  - Docker icindeki `db` servisi (`POSTGRES_HOST=db`)
+- Not:
+  - Docker local postgres SSL desteklemedigi icin compose tarafinda `POSTGRES_SSLMODE=disable` ayarlidir.
+
+## 16) Frontend Entegrasyonunda Kritik Notlar
+
+- Tum endpointlerde sonda `/` kullanin (`/api/services/` gibi).
+- `GET /api/pages/home/` gibi public endpointlerde token gondermek zorunlu degildir.
+- Sadece `/api/me/*` endpointleri token ister.
+- Token suresi dolarsa:
+  - `POST /api/auth/token/refresh/` ile yeni access alin.
+- `POST /api/contact/messages/` body alan adlari sabittir:
+  - `name`, `email`, `message`
+
+## 17) Frontend Teslim Oncesi 10 Dakika Smoke Plani
+
+1. `POST /api/auth/token/` -> 200, `access` al
+2. `GET /api/pages/home/` -> 200
+3. `GET /api/services/` -> 200
+4. `GET /api/blog/` -> 200
+5. `GET /api/projects/` -> 200
+6. `GET /api/faq/` -> 200
+7. `GET /api/contact/` -> 200
+8. `POST /api/contact/messages/` -> 201
+9. `GET /api/me/policies/` -> 200 (Bearer)
+10. `GET /api/me/quotes/`, `/claims/`, `/payments/`, `/alerts/` -> 200 (Bearer)
+
