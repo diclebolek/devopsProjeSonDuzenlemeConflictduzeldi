@@ -13,6 +13,21 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+def _env_int(name, default):
+    value = os.environ.get(name)
+    if value is None or value == "":
+        return default
+    return int(value)
+
+
+def _env_str(name, default):
+    value = os.environ.get(name)
+    if value is None or value == "":
+        return default
+    return value
+
+
 SECRET_KEY = os.environ.get(
     "DJANGO_SECRET_KEY",
     "django-insecure-dev-key-min-50-chars-please-change-in-production-7f3a9c2b1e",
@@ -76,7 +91,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-# --- Database: PostgreSQL when POSTGRES_HOST set; SQLite for unit tests ---
+# --- Database: PostgreSQL (Azure-compatible) when host set; SQLite for tests ---
 if "test" in sys.argv:
     DATABASES = {
         "default": {
@@ -84,15 +99,28 @@ if "test" in sys.argv:
             "NAME": ":memory:",
         }
     }
-elif os.environ.get("POSTGRES_HOST"):
+elif os.environ.get("POSTGRES_HOST") or os.environ.get("AZURE_POSTGRES_HOST"):
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.environ.get("POSTGRES_DB", "insucom"),
-            "USER": os.environ.get("POSTGRES_USER", "insucom"),
-            "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "insucom"),
-            "HOST": os.environ["POSTGRES_HOST"],
-            "PORT": os.environ.get("POSTGRES_PORT", "5432"),
+            "NAME": _env_str("POSTGRES_DB", "postgres"),
+            "USER": _env_str(
+                "POSTGRES_USER",
+                _env_str("AZURE_POSTGRES_USER", "db_manager"),
+            ),
+            "PASSWORD": _env_str("POSTGRES_PASSWORD", ""),
+            "HOST": _env_str(
+                "POSTGRES_HOST",
+                _env_str(
+                    "AZURE_POSTGRES_HOST",
+                    "dicle-backend-db.postgres.database.azure.com",
+                ),
+            ),
+            "PORT": _env_str("POSTGRES_PORT", _env_str("AZURE_POSTGRES_PORT", "5432")),
+            "CONN_MAX_AGE": _env_int("POSTGRES_CONN_MAX_AGE", 60),
+            "OPTIONS": {
+                "sslmode": _env_str("POSTGRES_SSLMODE", "require"),
+            },
         }
     }
 else:
@@ -126,8 +154,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=int(os.environ.get("JWT_ACCESS_MINUTES", "60"))),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=int(os.environ.get("JWT_REFRESH_DAYS", "7"))),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=_env_int("JWT_ACCESS_MINUTES", 60)),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=_env_int("JWT_REFRESH_DAYS", 7)),
     "ROTATE_REFRESH_TOKENS": False,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
