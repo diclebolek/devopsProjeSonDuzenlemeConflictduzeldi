@@ -28,6 +28,19 @@ def _env_str(name, default):
     return value
 
 
+def _env_jwt_signing_key():
+    """
+    Keep JWT HMAC key >=32 chars to avoid weak-key warnings.
+    """
+    fallback = "bkm9Gq2Xv7Lr3Tn5Wp8Ys1Df6Hj4Kz0Q"
+    value = os.environ.get("JWT_SIGNING_KEY")
+    if value is None or value == "":
+        return fallback
+    if len(value) < 32:
+        return fallback
+    return value
+
+
 SECRET_KEY = os.environ.get(
     "DJANGO_SECRET_KEY",
     "django-insecure-dev-key-min-50-chars-please-change-in-production-7f3a9c2b1e",
@@ -158,6 +171,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=_env_int("JWT_REFRESH_DAYS", 7)),
     "ROTATE_REFRESH_TOKENS": False,
     "AUTH_HEADER_TYPES": ("Bearer",),
+    "SIGNING_KEY": _env_jwt_signing_key(),
 }
 
 CORS_ALLOWED_ORIGINS = [

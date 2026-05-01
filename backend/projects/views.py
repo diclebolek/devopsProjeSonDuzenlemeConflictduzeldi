@@ -19,4 +19,4 @@ class ProjectDetailView(RetrieveAPIView):
     lookup_field = "slug"
 
     def get_queryset(self):
-        return Project.objects.filter(is_published=True).select_related("category")
+        return Project.objects.filter(is_published=True).select_related("category", "meta")

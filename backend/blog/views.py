@@ -10,7 +10,7 @@ class BlogPostListView(ListAPIView):
     serializer_class = BlogPostListSerializer
 
     def get_queryset(self):
-        return BlogPost.objects.filter(is_published=True).select_related("category")
+        return BlogPost.objects.filter(is_published=True).select_related("category").prefetch_related("comments")
 
 
 class BlogPostDetailView(RetrieveAPIView):
@@ -19,4 +19,4 @@ class BlogPostDetailView(RetrieveAPIView):
     lookup_field = "slug"
 
     def get_queryset(self):
-        return BlogPost.objects.filter(is_published=True).select_related("category")
+        return BlogPost.objects.filter(is_published=True).select_related("category").prefetch_related("comments")

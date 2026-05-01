@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Service, ServiceCategory
+from .models import Service, ServiceCategory, ServiceFeature
 
 
 @admin.register(ServiceCategory)
@@ -15,3 +15,9 @@ class ServiceAdmin(admin.ModelAdmin):
     list_filter = ("is_published", "category")
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ("title", "slug")
+
+
+@admin.register(ServiceFeature)
+class ServiceFeatureAdmin(admin.ModelAdmin):
+    list_display = ("service", "text", "sort_order")
+    list_filter = ("service",)

@@ -1,6 +1,58 @@
 from django.db import models
 
 
+class SiteSetting(models.Model):
+    """Global header/footer ve iletişim verileri (tek kayıt)."""
+
+    site_name = models.CharField(max_length=120, default="Insucom")
+    support_email = models.EmailField(blank=True)
+    support_phone = models.CharField(max_length=64, blank=True)
+    address_line = models.CharField(max_length=250, blank=True)
+    copyright_text = models.CharField(max_length=250, blank=True)
+    terms_url = models.URLField(max_length=500, blank=True)
+    privacy_url = models.URLField(max_length=500, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return self.site_name
+
+    @property
+    def primary_contact(self) -> str:
+        if self.support_email and self.support_phone:
+            return f"{self.support_email} / {self.support_phone}"
+        return self.support_email or self.support_phone
+
+    class Meta:
+        verbose_name = "Site setting"
+        verbose_name_plural = "Site setting"
+
+
+class SocialLink(models.Model):
+    class Platform(models.TextChoices):
+        FACEBOOK = "facebook", "Facebook"
+        INSTAGRAM = "instagram", "Instagram"
+        TWITTER = "twitter", "Twitter"
+        LINKEDIN = "linkedin", "LinkedIn"
+        YOUTUBE = "youtube", "YouTube"
+        OTHER = "other", "Other"
+
+    platform = models.CharField(max_length=20, choices=Platform.choices, default=Platform.OTHER)
+    label = models.CharField(max_length=80, blank=True)
+    url = models.URLField(max_length=500)
+    sort_order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ("sort_order", "id")
+
+    def __str__(self) -> str:
+        return self.label or self.platform
+
+
 class StaticPage(models.Model):
     """Ana sayfa, ikinci ana sayfa, hakkımızda gibi statik şablonların üst verisi."""
 

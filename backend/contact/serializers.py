@@ -35,5 +35,5 @@ class ContactPageSerializer(serializers.Serializer):
 class ContactMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactMessage
-        fields = ("id", "name", "email", "message", "created_at")
+        fields = ("id", "name", "email", "phone", "source_page", "message", "created_at")
         read_only_fields = ("id", "created_at")

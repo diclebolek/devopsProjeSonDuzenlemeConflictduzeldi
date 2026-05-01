@@ -19,4 +19,4 @@ class ServiceDetailView(RetrieveAPIView):
     lookup_field = "slug"
 
     def get_queryset(self):
-        return Service.objects.filter(is_published=True).select_related("category")
+        return Service.objects.filter(is_published=True).select_related("category").prefetch_related("features")

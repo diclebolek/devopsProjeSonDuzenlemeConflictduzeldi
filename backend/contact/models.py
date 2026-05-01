@@ -41,6 +41,8 @@ class ContactCard(models.Model):
 class ContactMessage(models.Model):
     name = models.CharField(max_length=150)
     email = models.EmailField()
+    phone = models.CharField(max_length=64, blank=True)
+    source_page = models.CharField(max_length=80, blank=True)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)

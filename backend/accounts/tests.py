@@ -48,3 +48,10 @@ class RegisterAPITests(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertIn("access", r.data)
         self.assertIn("refresh", r.data)
+
+
+class AccountsModelTests(TestCase):
+    def test_customer_profile_str(self):
+        user = User.objects.create_user(username="profileuser", password="longpassword1")
+        profile = CustomerProfile.objects.create(user=user)
+        self.assertIn("profileuser", str(profile))

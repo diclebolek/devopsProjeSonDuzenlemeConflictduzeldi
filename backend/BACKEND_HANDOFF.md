@@ -107,7 +107,9 @@ Contact message body:
 {
   "name": "Ali Veli",
   "email": "ali@example.com",
-  "message": "Merhaba, teklif alabilir miyim?"
+  "phone": "+90 555 111 22 33",
+  "message": "Merhaba, teklif alabilir miyim?",
+  "source_page": "contact.html"
 }
 ```
 
@@ -185,7 +187,7 @@ const myPolicies = await api.get("/me/policies/", {
 - [ ] Slug endpointleri dogru route ile eslendi mi?
 - [ ] Protected endpointlerde Bearer token var mi?
 - [ ] 401 olunca login'e yonlendirme var mi?
-- [ ] Form POST body alan adlari birebir dogru mu? (`name`, `email`, `message`)
+- [ ] Form POST body alan adlari birebir dogru mu? (`name`, `email`, `phone`, `message`, `source_page`)
 - [ ] Loading + error UI durumlari eklendi mi?
 
 ## 11) HTML Dosyasi -> Endpoint Esleme Tablosu
@@ -217,22 +219,31 @@ Bu tablo frontend tarafinin birebir hangi sayfada hangi endpoint'i cagirmasi ger
 Bu kisimda kritik alan isimleri birebir yazilmistir. Frontend bu isimleri oldugu gibi kullanmalidir.
 
 ### Services list item
-- `id`, `title`, `slug`, `short_description`, `icon_path`, `category`, `sort_order`, `updated_at`
+- `id`, `title`, `slug`, `short_description`, `icon_path`, `icon_url`, `category`, `sort_order`, `updated_at`
 
 ### Service detail
 - list alanlari + `body`
 
 ### Blog list item
-- `id`, `title`, `slug`, `excerpt`, `cover_image_path`, `author_display_name`, `published_at`, `category`, `updated_at`
+- `id`, `title`, `slug`, `excerpt`, `cover_image_path`, `cover_image_url`, `author_display_name`, `published_at`, `category`, `updated_at`
 
 ### Blog detail
 - list alanlari + `body`
 
 ### Project list item
-- `id`, `title`, `slug`, `summary`, `cover_image_path`, `client_name`, `completed_on`, `category`, `sort_order`, `updated_at`
+- `id`, `title`, `slug`, `summary`, `cover_image_path`, `cover_image_url`, `client_name`, `completed_on`, `category`, `sort_order`, `updated_at`
 
 ### Project detail
 - list alanlari + `body`
+
+### Coverage map + contract
+- `GET /api/pages/coverage-map/`
+- Her sayfa icin su alanlar gelir:
+  - `html`
+  - `model_source`
+  - `api`
+  - `contract` (frontendin zorunlu bekleyecegi field listesi)
+  - `mock_data_check` (`not_null`, `sample_values`, uygun sayfada `html_static_match`)
 
 ### Contact page
 - `profile.intro_kicker`

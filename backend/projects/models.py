@@ -34,3 +34,21 @@ class Project(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    @property
+    def budget_display(self) -> str:
+        if not hasattr(self, "meta") or self.meta.budget_amount is None:
+            return ""
+        return f"{self.meta.budget_amount} {self.meta.budget_currency}"
+
+
+class ProjectMeta(models.Model):
+    project = models.OneToOneField(Project, related_name="meta", on_delete=models.CASCADE)
+    budget_amount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    budget_currency = models.CharField(max_length=8, default="USD")
+    client_company = models.CharField(max_length=200, blank=True)
+    location = models.CharField(max_length=160, blank=True)
+    status_label = models.CharField(max_length=80, blank=True)
+
+    def __str__(self) -> str:
+        return f"Meta: {self.project.title}"

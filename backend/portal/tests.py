@@ -80,3 +80,44 @@ class PortalAPITests(TestCase):
         self.assertEqual(self.client.get(reverse("me-claims")).status_code, 200)
         self.assertEqual(self.client.get(reverse("me-payments")).status_code, 200)
         self.assertEqual(self.client.get(reverse("me-alerts")).status_code, 200)
+
+    def test_private_lists_return_only_current_user_rows(self):
+        user2 = User.objects.create_user(username="u3", password="pass12345!!")
+        InsuranceQuote.objects.create(user=user2, reference_code="Q-2", product_type="Konut", offered_premium=Decimal("1.00"))
+        ClaimTicket.objects.create(user=user2, claim_number="C-2", incident_date=date.today())
+        PaymentNotice.objects.create(user=user2, due_date=date.today(), amount=Decimal("10.00"))
+        CustomerAlert.objects.create(user=user2, title="Hidden")
+        refresh = RefreshToken.for_user(self.user)
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {refresh.access_token}")
+        self.assertEqual(len(self.client.get(reverse("me-quotes")).data), 1)
+        self.assertEqual(len(self.client.get(reverse("me-claims")).data), 1)
+        self.assertEqual(len(self.client.get(reverse("me-payments")).data), 1)
+        self.assertEqual(len(self.client.get(reverse("me-alerts")).data), 1)
+
+
+class PortalModelTests(TestCase):
+    def test_model_default_statuses(self):
+        user = User.objects.create_user(username="modeluser", password="pass12345!!")
+        policy = InsurancePolicy.objects.create(
+            user=user,
+            policy_number="P-M",
+            product_name="Kasko",
+            premium_amount=Decimal("100.00"),
+            start_date=date.today(),
+            end_date=date.today(),
+        )
+        quote = InsuranceQuote.objects.create(
+            user=user,
+            reference_code="Q-M",
+            product_type="Trafik",
+            offered_premium=Decimal("20.00"),
+        )
+        claim = ClaimTicket.objects.create(user=user, claim_number="C-M", incident_date=date.today())
+        payment = PaymentNotice.objects.create(user=user, due_date=date.today(), amount=Decimal("5.00"))
+        alert = CustomerAlert.objects.create(user=user, title="Notice")
+
+        self.assertEqual(policy.status, InsurancePolicy.Status.ACTIVE)
+        self.assertEqual(quote.status, InsuranceQuote.Status.SENT)
+        self.assertEqual(claim.status, ClaimTicket.Status.OPEN)
+        self.assertEqual(payment.status, PaymentNotice.Status.PENDING)
+        self.assertFalse(alert.is_read)

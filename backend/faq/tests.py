@@ -21,3 +21,11 @@ class FAQAPITests(TestCase):
     def test_faq_list_status_code(self):
         r = self.client.get(reverse("faq-list"))
         self.assertEqual(r.status_code, 200)
+
+
+class FAQModelTests(TestCase):
+    def test_ordering_by_sort_order_then_id(self):
+        FAQEntry.objects.create(question="Q2", answer="A2", is_active=True, sort_order=2)
+        FAQEntry.objects.create(question="Q1", answer="A1", is_active=True, sort_order=1)
+        items = list(FAQEntry.objects.all())
+        self.assertEqual(items[0].question, "Q1")

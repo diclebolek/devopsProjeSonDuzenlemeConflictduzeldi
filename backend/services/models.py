@@ -33,3 +33,19 @@ class Service(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    @property
+    def feature_count(self) -> int:
+        return self.features.count()
+
+
+class ServiceFeature(models.Model):
+    service = models.ForeignKey(Service, related_name="features", on_delete=models.CASCADE)
+    text = models.CharField(max_length=220)
+    sort_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ("sort_order", "id")
+
+    def __str__(self) -> str:
+        return f"{self.service.title}: {self.text}"

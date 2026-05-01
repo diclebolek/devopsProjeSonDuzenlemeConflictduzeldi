@@ -6,13 +6,13 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from accounts.models import CustomerProfile
-from blog.models import BlogCategory, BlogPost
+from blog.models import BlogCategory, BlogComment, BlogPost
 from contact.models import ContactCard, ContactSiteProfile
 from faq.models import FAQEntry
 from portal.models import ClaimTicket, CustomerAlert, InsurancePolicy, InsuranceQuote, PaymentNotice
-from projects.models import Project, ProjectCategory
-from services.models import Service, ServiceCategory
-from website.models import PageSection, PageStatistic, StaticPage
+from projects.models import Project, ProjectCategory, ProjectMeta
+from services.models import Service, ServiceCategory, ServiceFeature
+from website.models import PageSection, PageStatistic, SiteSetting, SocialLink, StaticPage
 
 User = get_user_model()
 
@@ -22,6 +22,44 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.stdout.write("Seeding demo data…")
+
+        site_setting, _ = SiteSetting.objects.get_or_create(pk=1)
+        site_setting.site_name = "Insucom"
+        site_setting.support_email = "info@example.com"
+        site_setting.support_phone = "(629) 555-0129"
+        site_setting.address_line = "6391 Elgin St. Celina, 10299"
+        site_setting.copyright_text = "© Yoursitename 2023 | All Rights Reserved"
+        site_setting.terms_url = "https://example.com/terms"
+        site_setting.privacy_url = "https://example.com/privacy"
+        site_setting.save()
+
+        SocialLink.objects.update_or_create(
+            platform=SocialLink.Platform.FACEBOOK,
+            defaults={
+                "label": "Facebook",
+                "url": "https://www.facebook.com/",
+                "sort_order": 1,
+                "is_active": True,
+            },
+        )
+        SocialLink.objects.update_or_create(
+            platform=SocialLink.Platform.INSTAGRAM,
+            defaults={
+                "label": "Instagram",
+                "url": "https://www.instagram.com/",
+                "sort_order": 2,
+                "is_active": True,
+            },
+        )
+        SocialLink.objects.update_or_create(
+            platform=SocialLink.Platform.LINKEDIN,
+            defaults={
+                "label": "LinkedIn",
+                "url": "https://www.linkedin.com/",
+                "sort_order": 3,
+                "is_active": True,
+            },
+        )
 
         home, _ = StaticPage.objects.update_or_create(
             slug="home",
@@ -102,6 +140,17 @@ class Command(BaseCommand):
                 "sort_order": 1,
             },
         )
+        service_trafik = Service.objects.get(slug="trafik-sigortasi")
+        ServiceFeature.objects.update_or_create(
+            service=service_trafik,
+            text="Coverage Review",
+            defaults={"sort_order": 1},
+        )
+        ServiceFeature.objects.update_or_create(
+            service=service_trafik,
+            text="Business Insurance",
+            defaults={"sort_order": 2},
+        )
         Service.objects.update_or_create(
             slug="kasko",
             defaults={
@@ -114,6 +163,17 @@ class Command(BaseCommand):
                 "sort_order": 2,
             },
         )
+        service_kasko = Service.objects.get(slug="kasko")
+        ServiceFeature.objects.update_or_create(
+            service=service_kasko,
+            text="Life Insurance",
+            defaults={"sort_order": 1},
+        )
+        ServiceFeature.objects.update_or_create(
+            service=service_kasko,
+            text="Health Insurance",
+            defaults={"sort_order": 2},
+        )
         Service.objects.update_or_create(
             slug="dask",
             defaults={
@@ -125,6 +185,40 @@ class Command(BaseCommand):
                 "is_published": True,
                 "sort_order": 3,
             },
+        )
+        service_dask = Service.objects.get(slug="dask")
+        ServiceFeature.objects.update_or_create(
+            service=service_dask,
+            text="Property Protection",
+            defaults={"sort_order": 1},
+        )
+        ServiceFeature.objects.update_or_create(
+            service=service_dask,
+            text="Cyber Liability",
+            defaults={"sort_order": 2},
+        )
+        Service.objects.update_or_create(
+            slug="konut-sigortasi",
+            defaults={
+                "category": sc_konut,
+                "title": "Konut Sigortası",
+                "short_description": "Evinizi ve eşyalarınızı kapsamlı güvence altına alın.",
+                "body": "Yangın, su baskını, hırsızlık ve ek teminatlarla konutunuzu koruyan paket.",
+                "icon_path": "./assets/img/service-4.svg",
+                "is_published": True,
+                "sort_order": 4,
+            },
+        )
+        service_konut = Service.objects.get(slug="konut-sigortasi")
+        ServiceFeature.objects.update_or_create(
+            service=service_konut,
+            text="Yangın ve Sel Koruması",
+            defaults={"sort_order": 1},
+        )
+        ServiceFeature.objects.update_or_create(
+            service=service_konut,
+            text="Hırsızlık Teminatı",
+            defaults={"sort_order": 2},
         )
 
         bc, _ = BlogCategory.objects.get_or_create(
@@ -144,6 +238,16 @@ class Command(BaseCommand):
                 "is_published": True,
             },
         )
+        blog_1 = BlogPost.objects.get(slug="sigorta-teknolojisi-2026")
+        BlogComment.objects.get_or_create(
+            post=blog_1,
+            email="reader1@example.com",
+            defaults={
+                "name": "Reader One",
+                "message": "Cok faydali bir yazi.",
+                "is_approved": True,
+            },
+        )
         BlogPost.objects.update_or_create(
             slug="arac-alirken-dikkat",
             defaults={
@@ -155,6 +259,16 @@ class Command(BaseCommand):
                 "author_display_name": "Uzman Yazar",
                 "published_at": timezone.now() - timedelta(days=2),
                 "is_published": True,
+            },
+        )
+        blog_2 = BlogPost.objects.get(slug="arac-alirken-dikkat")
+        BlogComment.objects.get_or_create(
+            post=blog_2,
+            email="reader2@example.com",
+            defaults={
+                "name": "Reader Two",
+                "message": "Tesekkurler, guzel ozet.",
+                "is_approved": True,
             },
         )
 
@@ -176,6 +290,17 @@ class Command(BaseCommand):
                 "sort_order": 1,
             },
         )
+        project_1 = Project.objects.get(slug="lojistik-filo-projesi")
+        ProjectMeta.objects.update_or_create(
+            project=project_1,
+            defaults={
+                "budget_amount": Decimal("45000.00"),
+                "budget_currency": "USD",
+                "client_company": "Sandi leo rakiul",
+                "location": "USA",
+                "status_label": "Monthly,Insecure",
+            },
+        )
         Project.objects.update_or_create(
             slug="perakende-zinciri",
             defaults={
@@ -187,6 +312,17 @@ class Command(BaseCommand):
                 "completed_on": date(2024, 11, 15),
                 "is_published": True,
                 "sort_order": 2,
+            },
+        )
+        project_2 = Project.objects.get(slug="perakende-zinciri")
+        ProjectMeta.objects.update_or_create(
+            project=project_2,
+            defaults={
+                "budget_amount": Decimal("28500.00"),
+                "budget_currency": "USD",
+                "client_company": "Retail Co",
+                "location": "Istanbul",
+                "status_label": "Completed",
             },
         )
 

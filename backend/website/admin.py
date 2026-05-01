@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import PageSection, PageStatistic, StaticPage
+from .models import PageSection, PageStatistic, SiteSetting, SocialLink, StaticPage
 
 
 class PageSectionInline(admin.TabularInline):
@@ -17,3 +17,14 @@ class PageStatisticInline(admin.TabularInline):
 class StaticPageAdmin(admin.ModelAdmin):
     list_display = ("slug", "meta_title", "updated_at")
     inlines = (PageSectionInline, PageStatisticInline)
+
+
+@admin.register(SiteSetting)
+class SiteSettingAdmin(admin.ModelAdmin):
+    list_display = ("site_name", "support_email", "support_phone", "updated_at")
+
+
+@admin.register(SocialLink)
+class SocialLinkAdmin(admin.ModelAdmin):
+    list_display = ("platform", "label", "url", "is_active", "sort_order")
+    list_filter = ("platform", "is_active")

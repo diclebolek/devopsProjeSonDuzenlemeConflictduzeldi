@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Project, ProjectCategory
+from .models import Project, ProjectCategory, ProjectMeta
 
 
 @admin.register(ProjectCategory)
@@ -14,3 +14,9 @@ class ProjectAdmin(admin.ModelAdmin):
     list_filter = ("is_published", "category")
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ("title", "slug")
+
+
+@admin.register(ProjectMeta)
+class ProjectMetaAdmin(admin.ModelAdmin):
+    list_display = ("project", "budget_amount", "budget_currency", "status_label")
+    search_fields = ("project__title", "client_company")
