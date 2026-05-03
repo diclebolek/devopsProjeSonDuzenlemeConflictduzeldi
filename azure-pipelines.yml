@@ -1,0 +1,22 @@
+trigger:
+  - main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+stages:
+  - stage: Test
+    displayName: "Run Backend Tests"
+    jobs:
+      - job: DjangoTests
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: "3.12"
+
+          - script: |
+              cd backend
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+              python manage.py test -v 1
+            displayName: "Install deps and run tests"
