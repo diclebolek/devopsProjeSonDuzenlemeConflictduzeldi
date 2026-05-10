@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Next.js build artifacts
+.next/
+frontend/.next/
+out/
+build/
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env.local
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDE / Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+tmp/
+temp/
