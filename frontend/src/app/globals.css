@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@layer components {
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6;
+  }
+  
+  .dash-table {
+    @apply w-full text-left border-collapse whitespace-nowrap;
+  }
+  
+  .dash-table th {
+    @apply px-4 py-4 border-b border-gray-100 text-sm font-semibold text-gray-500 bg-gray-50 uppercase tracking-wider;
+  }
+  
+  .dash-table td {
+    @apply px-4 py-4 border-b border-gray-50 text-sm text-gray-700;
+  }
+  
+  .dash-table tbody tr {
+    @apply hover:bg-gray-50 transition-colors;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border;
+  }
+  
+  .badge-green {
+    @apply bg-green-50 text-green-700 border-green-200;
+  }
+  
+  .badge-red {
+    @apply bg-red-50 text-red-700 border-red-200;
+  }
+  
+  .badge-yellow {
+    @apply bg-yellow-50 text-yellow-700 border-yellow-200;
+  }
+  
+  .badge-gray {
+    @apply bg-gray-50 text-gray-700 border-gray-200;
+  }
+
+  .spinner {
+    @apply w-8 h-8 border-4 border-gray-200 border-t-green-600 rounded-full animate-spin;
+  }
+}
