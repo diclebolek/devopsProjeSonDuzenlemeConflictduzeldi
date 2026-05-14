@@ -18,6 +18,9 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
+# Copy original package.json to prevent ERR_INVALID_PACKAGE_CONFIG
+COPY --from=base /app/package.json ./
+
 COPY --from=base /app/.next/standalone ./
 COPY --from=base /app/.next/static ./.next/static
 COPY --from=base /app/public ./public

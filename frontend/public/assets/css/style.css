@@ -347,15 +347,12 @@ position: absolute;
     top: 0;
     right: 0;
     z-index: 1010;
-    background: #fff;
+    background: #004C3F;
     box-shadow: 0 15px 30px 0 rgba(0,0,0,.058823529411764705);
     padding-top: 20px;
     padding-bottom: 20px;
     -webkit-animation: sticky 1.2s;
     animation: sticky 1.2s;
-}
-.navigation-wrapper.navigation-wrapper-two-two.sticky {
-    background: #004C3F;
 }
 
 @keyframes sticky {

@@ -1,10 +1,8 @@
-import HeaderTwo from '@/components/HeaderTwo';
 import FooterTwo from '@/components/FooterTwo';
 
 export default function HomeTwo() {
   return (
     <>
-      <HeaderTwo />
       <main>
         {/* Hero Area */}
         <section className="hero-area-2 w-full lg:h-[758px] py-20 relative overflow-hidden">
@@ -76,7 +74,7 @@ export default function HomeTwo() {
                      </div>
                    ))}
                 </div>
-                <a href="/about" className="px-[30px] py-4 border border-primary-900 rounded-lg text-primary-900 font-bold hover:bg-primary-900 hover:text-white transition-all">
+                <a href="#" className="px-[30px] py-4 border border-primary-900 rounded-lg text-primary-900 font-bold hover:bg-primary-900 hover:text-white transition-all">
                   Discover More
                 </a>
               </div>

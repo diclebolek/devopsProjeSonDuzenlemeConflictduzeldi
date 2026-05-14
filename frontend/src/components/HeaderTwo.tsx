@@ -1,9 +1,19 @@
 'use client';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 export default function HeaderTwo() {
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   return (
-    <header>
+    <header className="absolute top-0 left-0 z-[9999] w-full">
       {/* Top Bar */}
       <div className="lg:block hidden top-bar-wrapper w-full bg-primary-500 h-[50px]">
         <div className="theme-container mx-auto h-full px-5">
@@ -45,7 +55,7 @@ export default function HeaderTwo() {
       </div>
 
       {/* Navigation */}
-      <div className="navigation-wrapper navigation-wrapper-two-two w-full bg-primary-900 h-[90px]">
+      <div className={`navigation-wrapper navigation-wrapper-two-two w-full !bg-[#004C3F] h-[90px] ${isSticky ? 'fixed top-0 left-0 shadow-lg animate-[slideDown_0.3s_ease-in-out]' : ''}`}>
         <div className="theme-container h-full mx-auto px-5">
           <div className="w-full h-full flex justify-between items-center">
             <Link href="/">
@@ -83,6 +93,11 @@ export default function HeaderTwo() {
                 <li><Link href="/blog" className="hover:text-green-400 transition-colors">Blogs</Link></li>
                 <li><Link href="/faq" className="hover:text-green-400 transition-colors">Pages</Link></li>
                 <li><Link href="/contact" className="hover:text-green-400 transition-colors">Contact</Link></li>
+                <li>
+                  <Link href="/login" className="ml-4 px-5 py-2 bg-[#028835] hover:bg-white hover:text-primary-900 text-white font-bold rounded-lg text-sm common-trans shadow-sm">
+                    Login
+                  </Link>
+                </li>
               </ul>
             </nav>
 
