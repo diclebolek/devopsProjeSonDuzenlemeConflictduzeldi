@@ -18,11 +18,11 @@ export default function FooterTwo() {
               </h2>
             </div>
             <div>
-              <Link href="/contact">
+              <a href="#">
                 <div className="lg:px-10 hover:border-transparent inline lg:py-6 px-8 py-5 border border-white hover:bg-white common-trans rounded-lg text-lg font-semibold leading-4 spline-sans text-white hover:text-[#028835] cursor-pointer">
                   Discover More
                 </div>
-              </Link>
+              </a>
             </div>
           </div>
         </div>

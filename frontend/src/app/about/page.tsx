@@ -1,4 +1,6 @@
+'use client';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import PageBanner from '@/components/PageBanner';
 
 const StarIcon = () => (
@@ -27,9 +29,35 @@ const faqs = [
 ];
 
 export default function AboutPage() {
+  useEffect(() => {
+    // Ensure swiper exists globally
+    if (typeof window !== 'undefined' && (window as any).Swiper) {
+      new (window as any).Swiper(".test-two-swiper-wrapper", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        speed: 2000,
+        autoplay: {
+          delay: 3000,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        breakpoints: {
+          1024: {
+            slidesPerView: 2,
+          },
+          1440: {
+            slidesPerView: 3,
+          },
+        },
+      });
+    }
+  }, []);
+
   return (
     <>
-      <PageBanner title="About Us" breadcrumb="About" />
+      <PageBanner title="About" breadcrumb="About" />
 
       <div className="about-us-page-wrapper lg:pt-[120px] lg:pb-[240px] pt-[60px] pb-[120px]">
         {/* About Section */}
@@ -82,7 +110,7 @@ export default function AboutPage() {
                   Lorem ipsum dolor sit amet consectetur. Gravida vulputate vel necsit nunc Hendrerit sagittis donec eleifend ipsum quam. A lectus sit enim euismod urna.
                 </p>
                 <div>
-                  <Link href="/services">
+                  <Link href="/services/risk-assessment">
                     <div className="px-[42px] py-[23px] bg-primary-500 hover:bg-primary-900 common-trans rounded-lg inline">
                       <span className="text-lg text-white">Read More</span>
                     </div>

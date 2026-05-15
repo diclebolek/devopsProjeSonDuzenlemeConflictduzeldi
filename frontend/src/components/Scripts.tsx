@@ -8,7 +8,10 @@ export default function Scripts() {
       const target = e.target as HTMLElement;
       const modal = document.querySelector('.popv-main-wrapper');
       
-      if (target.closest('#video-popup-btn')) {
+      if (target.textContent?.trim().toLowerCase() === 'discover more' || target.closest('div')?.textContent?.trim().toLowerCase() === 'discover more') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (target.closest('#video-popup-btn')) {
         e.preventDefault();
         modal?.classList.add('active');
       } else if (target.closest('.popv-close') || target.closest('.popv-bg')) {

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import PageBanner from '@/components/PageBanner';
 import { apiService } from '@/lib/api';
 import { BlogListItem } from '@/types';
+import ClientSlider from '@/components/ClientSlider';
 
 async function getBlogs() {
   try {
@@ -146,28 +147,46 @@ export default async function BlogPage() {
                 </div>
               </div>
 
-              {/* Static Related Post Block (Simulating Swiper) */}
-              <div className="w-full mb-[60px]">
-                <p className="text-lg leading-7 spline-sans font-bold text-primary-900 capitalize mb-[20px]">Related post</p>
-                <div 
-                  style={{ backgroundImage: "url('/assets/img/blog-sidebar-thumb-1.png')" }}
-                  className="w-full h-[268px] rounded flex items-end bg-no-repeat bg-cover p-[30px] mt-5 relative"
-                >
-                  <div className="absolute inset-0 bg-black/20 rounded"></div>
-                  <div className="relative z-10">
-                    <div className="flex space-x-1.5 items-center mb-2.5">
-                      <span>
-                        <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.875 7.46875L14.875 13.4688C14.7188 13.8125 14.375 14 13.9688 14H2C0.875 14 0 13.125 0 12V2C0 0.90625 0.875 0 2 0H5.65625C6.1875 0 6.6875 0.21875 7.0625 0.59375L8.59375 2H13C14.0938 2 15 2.90625 15 4V5H13.5V4C13.5 3.75 13.25 3.5 13 3.5H8L6 1.65625C5.90625 1.5625 5.78125 1.5 5.65625 1.5H2C1.71875 1.5 1.5 1.75 1.5 2V11L3.71875 6.5625C3.875 6.21875 4.21875 6 4.59375 6H17C17.7188 6 18.2188 6.78125 17.875 7.46875Z" fill="white" /></svg>
-                      </span>
-                      <span className="text-base text-white leading-[27px]">Designing</span>
-                    </div>
-                    <p className="text-lg font-bold text-white leading-[27px]">Protect what matters most</p>
-                  </div>
-                  <div className="px-5 py-2.5 rounded bg-primary-500 absolute -top-2 left-[40px] z-20 flex items-center space-x-2.5">
-                    <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 8C4.78125 8 3 6.21875 3 4C3 1.8125 4.78125 0 7 0C9.1875 0 11 1.8125 11 4C11 6.21875 9.1875 8 7 8ZM5.5625 9.5H8.40625C11.5 9.5 14 12 14 15.0938C14 15.5938 13.5625 16 13.0625 16H0.90625C0.40625 16 0 15.5938 0 15.0938C0 12 2.46875 9.5 5.5625 9.5Z" fill="white" /></svg>
-                    <span className="text-base font-semibold text-white">Admin</span>
+              {/* Related Post Slider Container */}
+              <div className="related-post-slider w-full mb-[60px]">
+                <div className="w-full flex justify-between items-center mb-[20px] relative">
+                  <span className="text-lg leading-7 spline-sans font-bold text-primary-900 capitalize">Related post</span>
+                  <div className="flex space-x-5 items-center">
+                    <button type="button" className="swiper-button-next text-primary-100 hover:text-primary-500 focus:text-primary-500 common-trans">
+                      <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current transform rotate-180"><path d="M13.6875 7.71875L8.6875 12.7188C8.5 12.9062 8.25 13 8 13C7.71875 13 7.46875 12.9062 7.28125 12.7188C6.875 12.3438 6.875 11.6875 7.28125 11.3125L10.5625 8H1C0.4375 8 0 7.5625 0 7C0 6.46875 0.4375 6 1 6H10.5625L7.28125 2.71875C6.875 2.34375 6.875 1.6875 7.28125 1.3125C7.65625 0.90625 8.3125 0.90625 8.6875 1.3125L13.6875 6.3125C14.0938 6.6875 14.0938 7.34375 13.6875 7.71875Z"/></svg>
+                    </button>
+                    <button type="button" className="swiper-button-prev text-primary-100 hover:text-primary-500 focus:text-primary-500 common-trans">
+                      <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current"><path d="M13.6875 7.71875L8.6875 12.7188C8.5 12.9062 8.25 13 8 13C7.71875 13 7.46875 12.9062 7.28125 12.7188C6.875 12.3438 6.875 11.6875 7.28125 11.3125L10.5625 8H1C0.4375 8 0 7.5625 0 7C0 6.46875 0.4375 6 1 6H10.5625L7.28125 2.71875C6.875 2.34375 6.875 1.6875 7.28125 1.3125C7.65625 0.90625 8.3125 0.90625 8.6875 1.3125L13.6875 6.3125C14.0938 6.6875 14.0938 7.34375 13.6875 7.71875Z"/></svg>
+                    </button>
                   </div>
                 </div>
+                <ClientSlider type="related-post-slider-wrap">
+                  <div className="related-post-slider-wrap overflow-hidden">
+                    <div className="swiper-wrapper">
+                      {[1, 2].map((num) => (
+                        <div key={num} className="swiper-slide">
+                          <div 
+                            style={{ backgroundImage: `url('/assets/img/blog-sidebar-thumb-${num}.png')` }}
+                            className="w-full h-[268px] rounded flex items-end bg-no-repeat bg-cover p-[30px] mt-5 relative"
+                          >
+                            <div className="absolute inset-0 bg-black/20 rounded"></div>
+                            <div className="relative z-10">
+                              <div className="flex space-x-1.5 items-center mb-2.5">
+                                <span><svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.875 7.46875L14.875 13.4688C14.7188 13.8125 14.375 14 13.9688 14H2C0.875 14 0 13.125 0 12V2C0 0.90625 0.875 0 2 0H5.65625C6.1875 0 6.6875 0.21875 7.0625 0.59375L8.59375 2H13C14.0938 2 15 2.90625 15 4V5H13.5V4C13.5 3.75 13.25 3.5 13 3.5H8L6 1.65625C5.90625 1.5625 5.78125 1.5 5.65625 1.5H2C1.71875 1.5 1.5 1.75 1.5 2V11L3.71875 6.5625C3.875 6.21875 4.21875 6 4.59375 6H17C17.7188 6 18.2188 6.78125 17.875 7.46875Z" fill="white" /></svg></span>
+                                <span className="text-base text-white leading-[27px]">Designing</span>
+                              </div>
+                              <p className="text-lg font-bold text-white leading-[27px]">Protect what matters most</p>
+                            </div>
+                            <div className="px-5 py-2.5 rounded bg-primary-500 absolute -top-2 left-[40px] z-20 flex items-center space-x-2.5">
+                              <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 8C4.78125 8 3 6.21875 3 4C3 1.8125 4.78125 0 7 0C9.1875 0 11 1.8125 11 4C11 6.21875 9.1875 8 7 8ZM5.5625 9.5H8.40625C11.5 9.5 14 12 14 15.0938C14 15.5938 13.5625 16 13.0625 16H0.90625C0.40625 16 0 15.5938 0 15.0938C0 12 2.46875 9.5 5.5625 9.5Z" fill="white" /></svg>
+                              <span className="text-base font-semibold text-white">Admin</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </ClientSlider>
               </div>
 
               {/* Categories */}
