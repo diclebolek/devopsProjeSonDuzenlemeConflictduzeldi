@@ -24,7 +24,7 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
   const topBarSocialText = isLight ? 'text-gray-800' : 'text-white';
 
   const navBg = isLight ? 'bg-white border-b border-primaryBorder' : '!bg-[#004C3F]';
-  const navText = isLight ? 'text-primary-900' : 'text-white';
+  const navText = isLight ? 'text-primary-900 font-semibold' : 'text-white font-semibold';
   const searchFill = isLight ? '#004C3F' : 'white';
   const logoStyle = isLight ? {} : { filter: 'brightness(0) invert(1)' };
 

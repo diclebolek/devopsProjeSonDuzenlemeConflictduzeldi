@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import Link from 'next/link';
 import PageBanner from '@/components/PageBanner';
 import { apiService } from '@/lib/api';
@@ -24,8 +25,9 @@ const features = [
   { num: '04', title: 'Coverage Care', desc: 'Oshed fact that a reader will be distrol acted bioiiy desig.' },
 ];
 
-export default async function ProjectDetailPage({ params }: { params: { slug: string } }) {
-  const project = await getProject(params.slug);
+export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = await getProject(slug);
   const title = project?.title || 'A Lifetime Insurance';
   const description = project?.description || 'Aliquam eros justo, posuere loborti viverra laoreet matti ullamcorper posuere viverra.';
   const img = project?.cover_image_url || '/assets/img/project-details-thumb-1.png';

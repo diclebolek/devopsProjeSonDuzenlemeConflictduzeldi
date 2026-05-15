@@ -138,15 +138,14 @@ export default async function BlogPage() {
                       className="w-full h-full focus:outline-none focus:ring-0 px-5 bg-transparent placeholder:text-primary-100 text-primary-900"
                     />
                   </div>
-                  <div className="w-[60px] h-full flex justify-center items-center">
-                    <span>
-                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16.625 14.875L12.875 11.125C13.7188 9.875 14.1562 8.3125 13.9375 6.625C13.5312 3.75 11.1875 1.4375 8.34375 1.0625C4.09375 0.53125 0.5 4.125 1.03125 8.375C1.40625 11.2188 3.71875 13.5625 6.59375 13.9688C8.28125 14.1875 9.84375 13.75 11.125 12.9062L14.8438 16.6562C15.3438 17.125 16.125 17.125 16.625 16.6562C17.0938 16.1562 17.0938 15.375 16.625 14.875ZM3.46875 7.5C3.46875 5.3125 5.25 3.5 7.46875 3.5C9.65625 3.5 11.4688 5.3125 11.4688 7.5C11.4688 9.71875 9.65625 11.5 7.46875 11.5C5.25 11.5 3.46875 9.71875 3.46875 7.5Z" fill="#028835" />
-                      </svg>
-                    </span>
-                  </div>
+                  <button type="button" className="w-[60px] h-full flex justify-center items-center hover:bg-primary-500 rounded-r transition-all group">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:fill-white fill-[#028835] transition-colors">
+                      <path d="M16.625 14.875L12.875 11.125C13.7188 9.875 14.1562 8.3125 13.9375 6.625C13.5312 3.75 11.1875 1.4375 8.34375 1.0625C4.09375 0.53125 0.5 4.125 1.03125 8.375C1.40625 11.2188 3.71875 13.5625 6.59375 13.9688C8.28125 14.1875 9.84375 13.75 11.125 12.9062L14.8438 16.6562C15.3438 17.125 16.125 17.125 16.625 16.6562C17.0938 16.1562 17.0938 15.375 16.625 14.875ZM3.46875 7.5C3.46875 5.3125 5.25 3.5 7.46875 3.5C9.65625 3.5 11.4688 5.3125 11.4688 7.5C11.4688 9.71875 9.65625 11.5 7.46875 11.5C5.25 11.5 3.46875 9.71875 3.46875 7.5Z" />
+                    </svg>
+                  </button>
                 </div>
               </div>
+
 
               {/* Related Post Slider Container */}
               <div className="related-post-slider w-full mb-[60px]">

@@ -370,7 +370,7 @@ export default async function HomePage() {
                   </div>
                 </div>
                 <div className="xl:p-7 p-5">
-                  <Link href="/blog/details">
+                  <Link href="/blog/giving-power">
                     <h3 className="xl:text-xl text-lg font-bold text-primary-900 mb-5 group-hover:text-primary-500 transition-colors leading-tight spline-sans">
                       {blog.title}
                     </h3>
@@ -389,7 +389,7 @@ export default async function HomePage() {
                       <span className="text-base">Comments (05)</span>
                     </div>
                   </div>
-                  <Link href="/blog/details" className="px-[30px] py-[14px] border border-primary-500 rounded-lg text-primary-900 font-bold hover:bg-primary-500 hover:text-white transition-all inline-block spline-sans">
+                  <Link href="/blog/giving-power" className="px-[30px] py-[14px] border border-primary-500 rounded-lg text-primary-900 font-bold hover:bg-primary-500 hover:text-white transition-all inline-block spline-sans">
                     Read More
                   </Link>
                 </div>
