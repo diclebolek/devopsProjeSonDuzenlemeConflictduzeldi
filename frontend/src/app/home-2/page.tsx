@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import FooterTwo from '@/components/FooterTwo';
 
 export default function HomeTwo() {
