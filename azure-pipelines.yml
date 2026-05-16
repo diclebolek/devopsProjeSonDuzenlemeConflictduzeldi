@@ -14,4 +14,7 @@ steps:
     echo "2. ADIM: Docker konteynerları arka planda güncelleniyor..."
     cd ~/SigortaWebSitesi
     docker compose up -d --build
+
+    echo "3. ADIM: Nginx hafızası otomatik olarak tazeleniyor..."
+    docker restart sigortawebsitesi-nginx-1
   displayName: 'Docker Konteynerlarını Yeniden İnşa Et (Zero-Downtime)'
