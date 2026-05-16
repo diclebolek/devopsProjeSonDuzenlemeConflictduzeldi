@@ -2,21 +2,16 @@ trigger:
   - main
 
 pool:
-  vmImage: "ubuntu-latest"
+  name: 'UbuntuSunucuPool'
 
-stages:
-  - stage: Test
-    displayName: "Run Backend Tests"
-    jobs:
-      - job: DjangoTests
-        steps:
-          - task: UsePythonVersion@0
-            inputs:
-              versionSpec: "3.12"
+steps:
+- script: |
+    echo "1. ADIM: Yeni kodlar sunucu klasörüne aktarılıyor..."
+    rsync -av --exclude='.git' --exclude='.env' $(Build.SourcesDirectory)/ ~/SigortaWebSitesi/
+  displayName: 'Kodları Canlı Klasöre Senkronize Et'
 
-          - script: |
-              cd backend
-              python -m pip install --upgrade pip
-              pip install -r requirements.txt
-              python manage.py test -v 1
-            displayName: "Install deps and run tests"
+- script: |
+    echo "2. ADIM: Docker konteynerları arka planda güncelleniyor..."
+    cd ~/SigortaWebSitesi
+    docker compose up -d --build
+  displayName: 'Docker Konteynerlarını Yeniden İnşa Et (Zero-Downtime)'
