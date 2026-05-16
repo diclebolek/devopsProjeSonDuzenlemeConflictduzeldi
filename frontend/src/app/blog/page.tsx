@@ -211,7 +211,7 @@ export default async function BlogPage() {
               <div className="w-full mb-[60px]">
                 <p className="text-lg leading-7 spline-sans font-bold text-primary-900 mb-[30px]">Recent Post</p>
                 <ul className="flex flex-col space-y-5">
-                  {[1, 2, 3].map((_, i) => (
+                  {displayList.slice(0, 3).map((blog: any, i: number) => (
                     <li key={i}>
                       <div className="w-full group">
                         <div className="flex space-x-2.5 items-center mb-2.5">
@@ -220,10 +220,10 @@ export default async function BlogPage() {
                               <path d="M4.75 2H9.25V0.75C9.25 0.34375 9.5625 0 10 0C10.4062 0 10.75 0.34375 10.75 0.75V2H12C13.0938 2 14 2.90625 14 4V14C14 15.125 13.0938 16 12 16H2C0.875 16 0 15.125 0 14V4C0 2.90625 0.875 2 2 2H3.25V0.75C3.25 0.34375 3.5625 0 4 0C4.40625 0 4.75 0.34375 4.75 0.75V2ZM1.5 7.75H4V6H1.5V7.75ZM1.5 9.25V11.25H4V9.25H1.5ZM5.5 9.25V11.25H8.5V9.25H5.5ZM10 9.25V11.25H12.5V9.25H10ZM12.5 6H10V7.75H12.5V6ZM12.5 12.75H10V14.5H12C12.25 14.5 12.5 14.2812 12.5 14V12.75ZM8.5 12.75H5.5V14.5H8.5V12.75ZM4 12.75H1.5V14C1.5 14.2812 1.71875 14.5 2 14.5H4V12.75ZM8.5 6H5.5V7.75H8.5V6Z" fill="#028835" />
                             </svg>
                           </span>
-                          <span className="text-base text-primary-100">October 19, 2022</span>
+                          <span className="text-base text-primary-100">{blog.date}</span>
                         </div>
                         <p className="text-gray-700 text-lg font-bold spline-sans leading-7 group-hover:text-primary-500 common-trans">
-                          <Link href="/blog">Protect What Matters Most to You with Insurance</Link>
+                          <Link href={`/blog/${blog.slug}`}>{blog.title}</Link>
                         </p>
                       </div>
                     </li>
