@@ -49,7 +49,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "true").lower() in ("1", "true", "yes")
 
 ALLOWED_HOSTS = [
     h.strip()
-    for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,insucomsigorta.site").split(",")
+    for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,insucomsigorta.site,www.insucomsigorta.site").split(",")
     if h.strip()
 ]
 
@@ -176,7 +176,7 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     o.strip()
-    for o in os.environ.get("CORS_ALLOWED_ORIGINS", "http://localhost:3000,https://insucomsigorta.site").split(",")
+    for o in os.environ.get("CORS_ALLOWED_ORIGINS", "http://localhost:3000,https://insucomsigorta.site,https://www.insucomsigorta.site").split(",")
     if o.strip()
 ]
 CORS_ALLOW_CREDENTIALS = True
