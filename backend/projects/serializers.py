@@ -32,6 +32,12 @@ class ProjectListSerializer(serializers.ModelSerializer):
     def get_cover_image_url(self, obj):
         if not obj.cover_image_path:
             return ""
+        
+        # --- AZURE BLOB STORAGE KORUMASI ---
+        # Eğer veritabanındaki yol zaten bir canlı internet linkiyse (https://...), doğrudan onu döndür.
+        if obj.cover_image_path.startswith(('http://', 'https://')):
+            return obj.cover_image_path
+            
         normalized_path = obj.cover_image_path[1:] if obj.cover_image_path.startswith("./") else obj.cover_image_path
         request = self.context.get("request")
         if request is None:
@@ -76,6 +82,12 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
     def get_cover_image_url(self, obj):
         if not obj.cover_image_path:
             return ""
+        
+        # --- AZURE BLOB STORAGE KORUMASI ---
+        # Eğer veritabanındaki yol zaten bir canlı internet linkiyse (https://...), doğrudan onu döndür.
+        if obj.cover_image_path.startswith(('http://', 'https://')):
+            return obj.cover_image_path
+            
         normalized_path = obj.cover_image_path[1:] if obj.cover_image_path.startswith("./") else obj.cover_image_path
         request = self.context.get("request")
         if request is None:

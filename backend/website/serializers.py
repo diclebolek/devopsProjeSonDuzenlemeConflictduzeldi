@@ -13,6 +13,12 @@ class PageSectionSerializer(serializers.ModelSerializer):
     def get_image_url(self, obj):
         if not obj.image_path:
             return ""
+            
+        # --- AZURE BLOB STORAGE KORUMASI ---
+        # Eğer veritabanındaki yol zaten bir canlı internet linkiyse (https://...), doğrudan onu döndür.
+        if obj.image_path.startswith(('http://', 'https://')):
+            return obj.image_path
+            
         normalized_path = obj.image_path[1:] if obj.image_path.startswith("./") else obj.image_path
         request = self.context.get("request")
         if request is None:
