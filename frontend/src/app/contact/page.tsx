@@ -10,7 +10,7 @@ export default function ContactPage() {
     e.preventDefault();
     setStatus('sending');
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'}/website/contact/`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://insucomsigorta.site/api'}/website/contact/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
