@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 import Link from 'next/link';
 import { apiService } from '@/lib/api';
+import { mediaUrl } from '@/lib/media';
 import { ServiceListItem } from '@/types';
 
 async function getServices(): Promise<ServiceListItem[]> {
@@ -50,7 +51,7 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-        <div data-aos="fade-left" data-aos-duration="1000" className="hero-image-1 w-full h-full absolute left-0 top-0 z-10 bg-no-repeat bg-cover" style={{ backgroundImage: "url('/assets/img/hero-img.png')" }}></div>
+        <div data-aos="fade-left" data-aos-duration="1000" className="hero-image-1 w-full h-full absolute left-0 top-0 z-10 bg-no-repeat bg-cover" style={{ backgroundImage: `url(${mediaUrl('hero-img.png')})` }}></div>
       </section>
 
       {/* About */}
@@ -59,7 +60,7 @@ export default async function HomePage() {
           <div className="w-full grid xl:grid-cols-2 grid-cols-1 lg:gap-[66px] gap-[30px] items-center relative">
             <div>
               <div className="thumbnail-area 2xl:w-[721px] w-full 2xl:absolute 2xl:-left-[150px] -top-8 relative">
-                <img src="/assets/img/about-thumb.png" alt="about" className="relative z-10 w-full h-full" />
+                <img src={mediaUrl('about-thumb.png')} alt="about" className="relative z-10 w-full h-full" />
                 <div className="about-shape gear-2 xl:w-[385px] xl:h-[385px] md:w-[500px] md:h-[500px] w-[250px] h-[250px]"></div>
                 <div className="w-[250px] h-[94px] rounded-[16px] bg-primary-500 flex justify-center items-center absolute sm:top-[432px] top-[200px] sm:right-[156px] right-5 z-10">
                   <div>
@@ -152,7 +153,7 @@ export default async function HomePage() {
                     <Link href={`/services/${s.slug}`}>
                       <div className="flex justify-center mb-5">
                         <div className="w-[60px] h-[60px] rounded flex justify-center items-center bg-primary-50">
-                          {s.icon_url ? <img src={s.icon_url} alt={s.title} /> : <img src={`/assets/img/service-${i + 1}.svg`} alt={s.title} />}
+                          {s.icon_url ? <img src={s.icon_url} alt={s.title} /> : <img src={mediaUrl(`service-${i + 1}.svg`)} alt={s.title} />}
                         </div>
                       </div>
                       <h2 className="text-lg leading-7 font-bold spline-sans text-center text-primary-900 mb-5 group-hover:underline">{s.title}</h2>
@@ -165,7 +166,7 @@ export default async function HomePage() {
                       <Link href="/services">
                         <div className="flex justify-center mb-5">
                           <div className="w-[60px] h-[60px] rounded flex justify-center items-center bg-primary-50">
-                            <img src={`/assets/img/service-${i + 1}.svg`} alt={title} />
+                            <img src={mediaUrl(`service-${i + 1}.svg`)} alt={title} />
                           </div>
                         </div>
                         <h2 className="text-lg leading-7 font-bold spline-sans text-center text-primary-900 mb-5 group-hover:underline">{title}</h2>
@@ -186,7 +187,7 @@ export default async function HomePage() {
           <h2 className="headline-default text-primary-900 lg:mb-[60px] mb-[30px]">Fill your life with <br />security and joy</h2>
           <div className="insu-swiper relative">
             <div className="swiper-wrapper">
-              {['/assets/img/insu-1.png', '/assets/img/insu-2.png', '/assets/img/insu-3.png', '/assets/img/insu-1.png'].map((src, i) => (
+              {[mediaUrl('insu-1.png'), mediaUrl('insu-2.png'), mediaUrl('insu-3.png'), mediaUrl('insu-1.png')].map((src, i) => (
                 <div key={i} className="swiper-slide">
                   <div className="w-full lg:h-[550px] h-[300px] flex justify-center items-center group" style={{ backgroundImage: `url(${src})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
                     <a href="#">
@@ -202,13 +203,13 @@ export default async function HomePage() {
       </section>
 
       {/* Fun Fact */}
-      <section className="fun-fact-area lg:pt-[120px] xl:pb-0 lg:pb-[120px] py-[60px] xl:min-h-[1000px] overflow-hidden" style={{ backgroundImage: "url('/assets/img/fun-fact-bg.png')", backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+      <section className="fun-fact-area lg:pt-[120px] xl:pb-0 lg:pb-[120px] py-[60px] xl:min-h-[1000px] overflow-hidden" style={{ backgroundImage: `url(${mediaUrl('fun-fact-bg.png')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
         <div className="theme-container mx-auto relative">
           <div className="w-full flex flex-wrap lg:flex-nowrap gap-[30px] lg:gap-0 justify-between items-center xl:mb-[100px] lg:mb-[60px] mb-[30px]">
             {[{ img: 'project.svg', end: 30, label: 'Complete Projects' }, { img: 'client.svg', end: 24, label: 'Client Satisfaction' }, { img: 'members.svg', end: 12, label: 'Active Members' }, { img: 'award.svg', end: 5, label: 'Winning Award' }].map((item) => (
               <div key={item.label} className="item flex space-x-5 items-center">
                 <div className="xl:w-[80px] xl:h-[80px] w-16 h-16 rounded-full bg-primary-500 flex justify-center items-center">
-                  <img src={`/assets/img/${item.img}`} alt="" />
+                  <img src={mediaUrl(item.img)} alt="" />
                 </div>
                 <div className="flex-1">
                   <p className="xl:text-[40px] font-bold text-white text-2xl xl:leading-[55px]">
@@ -222,7 +223,7 @@ export default async function HomePage() {
           <div className="faq-wrapper w-full xl:absolute xl:flex items-center">
             <div className="w-[740px] xl:block hidden rounded-[10px]">
               <div className="w-full h-[888px]">
-                <img src="/assets/img/fun-fact-thum.png" alt="" className="w-full h-full object-cover" />
+                <img src={mediaUrl('fun-fact-thum.png')} alt="" className="w-full h-full object-cover" />
               </div>
             </div>
             <div className="flex-1">
@@ -253,7 +254,7 @@ export default async function HomePage() {
       </section>
 
       {/* How It Works / Process Section */}
-      <section className="process-area w-full lg:py-[120px] py-[60px] relative z-10" style={{ backgroundImage: "url('/assets/img/progress-bg.svg')", backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+      <section className="process-area w-full lg:py-[120px] py-[60px] relative z-10" style={{ backgroundImage: `url(${mediaUrl('progress-bg.svg')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
         <div className="theme-container mx-auto">
           <div className="text-center mb-[60px]">
             <h2 className="headline-default text-primary-900">
@@ -262,10 +263,10 @@ export default async function HomePage() {
           </div>
           <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[30px]">
             {[
-              { num: '01', icon: '/assets/img/progress-1.svg', title: 'Planning & Analysis', desc: 'This stage involves identifying the needs and requirements of the client.' },
-              { num: '02', icon: '/assets/img/progress-2.svg', title: 'Protector Insurance', desc: 'This stage involves identifying the needs and requirements of the client.' },
-              { num: '03', icon: '/assets/img/progress-3.svg', title: 'Trust Insured', desc: 'This stage involves identifying the needs and requirements of the client.' },
-              { num: '04', icon: '/assets/img/progress-4.svg', title: 'Secure Coverage', desc: 'This stage involves identifying the needs and requirements of the client.' },
+              { num: '01', icon: mediaUrl('progress-1.svg'), title: 'Planning & Analysis', desc: 'This stage involves identifying the needs and requirements of the client.' },
+              { num: '02', icon: mediaUrl('progress-2.svg'), title: 'Protector Insurance', desc: 'This stage involves identifying the needs and requirements of the client.' },
+              { num: '03', icon: mediaUrl('progress-3.svg'), title: 'Trust Insured', desc: 'This stage involves identifying the needs and requirements of the client.' },
+              { num: '04', icon: mediaUrl('progress-4.svg'), title: 'Secure Coverage', desc: 'This stage involves identifying the needs and requirements of the client.' },
             ].map((step, i) => (
               <div key={i} data-aos="fade-up" data-aos-delay={(i + 1) * 100} className="process-item relative p-[30px] rounded-[10px] bg-white border border-primaryBorder hover:shadow-xl common-trans group">
                 <p className="xl:text-[80px] text-[60px] font-bold text-primary-50 leading-none absolute top-5 right-5 select-none">{step.num}</p>
@@ -297,10 +298,10 @@ export default async function HomePage() {
           <div className="testimonial-swiper">
             <div className="swiper-wrapper">
               {[
-                { name: 'Esther Howard', role: 'Ux Architect', img: '/assets/img/testimonial-1.png' },
-                { name: 'Ralph Edwards', role: 'Ux Architect', img: '/assets/img/testimonial-2.png' },
-                { name: 'Annette Black', role: 'Ux Architect', img: '/assets/img/testimonial-3.png' },
-                { name: 'Esther Howard', role: 'Ux Architect', img: '/assets/img/testimonial-1.png' },
+                { name: 'Esther Howard', role: 'Ux Architect', img: mediaUrl('testimonial-1.png') },
+                { name: 'Ralph Edwards', role: 'Ux Architect', img: mediaUrl('testimonial-2.png') },
+                { name: 'Annette Black', role: 'Ux Architect', img: mediaUrl('testimonial-3.png') },
+                { name: 'Esther Howard', role: 'Ux Architect', img: mediaUrl('testimonial-1.png') },
               ].map((t, i) => (
                 <div key={i} className="swiper-slide">
                   <div className="item sm:p-10 p-5 border border-primaryBorder rounded">
@@ -355,9 +356,9 @@ export default async function HomePage() {
           </div>
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px]">
             {[
-              { title: 'Never worry about accidents anymore', date: 'October 19, 2022', img: '/assets/img/blog-1.png' },
-              { title: 'The insurance company that you can trust', date: 'October 19, 2022', img: '/assets/img/blog-2.png' },
-              { title: 'The next big thing in the insurance industry', date: 'October 19, 2022', img: '/assets/img/blog-3.png' }
+              { title: 'Never worry about accidents anymore', date: 'October 19, 2022', img: mediaUrl('blog-1.png') },
+              { title: 'The insurance company that you can trust', date: 'October 19, 2022', img: mediaUrl('blog-2.png') },
+              { title: 'The next big thing in the insurance industry', date: 'October 19, 2022', img: mediaUrl('blog-3.png') }
             ].map((blog, i) => (
               <div key={i} data-aos="fade-up" data-aos-delay={(i+1)*100} className="blog-item group w-full overflow-hidden rounded bg-secondary hover:bg-white hover:shadow-2xl transition-all duration-300 ease-in-out border border-transparent hover:border-primaryBorder">
                 <div className="w-full h-[286px] relative overflow-hidden">

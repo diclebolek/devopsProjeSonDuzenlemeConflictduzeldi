@@ -8,9 +8,10 @@ RUN npm ci
 
 # Build
 COPY . .
-# [Değişiklik] Varsayılan adresi sunucu .env dosyası ile eşitledim (Gerekirse sonuna /api ekleyin)
 ARG NEXT_PUBLIC_API_URL=https://www.insucomsigorta.site/api
+ARG NEXT_PUBLIC_MEDIA_BASE_URL=https://insucomstorage.blob.core.windows.net/medya
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_MEDIA_BASE_URL=$NEXT_PUBLIC_MEDIA_BASE_URL
 RUN npm run build
 
 # Production image

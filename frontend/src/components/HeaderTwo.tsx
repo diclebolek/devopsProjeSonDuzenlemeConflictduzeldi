@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { mediaUrl } from '@/lib/media';
 
 export default function HeaderTwo() {
   const [isSticky, setIsSticky] = useState(false);
@@ -59,7 +60,7 @@ export default function HeaderTwo() {
         <div className="theme-container h-full mx-auto px-5">
           <div className="w-full h-full flex justify-between items-center">
             <Link href="/">
-              <img src="/assets/img/logo-2.svg" alt="logo" />
+              <img src={mediaUrl('logo-2.svg')} alt="logo" />
             </Link>
             
             <nav className="nav-wrapper nav-wrapper-2 lg:block hidden">

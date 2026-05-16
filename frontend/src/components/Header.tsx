@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { mediaUrl } from '@/lib/media';
 
 interface HeaderProps {
   variant?: 'light' | 'dark';
@@ -93,7 +94,7 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
             <div className="h-full flex items-center space-x-[72px]">
               <Link href="/">
                 <div className="logo-area w-[180px] h-[55px]">
-                  <img src="/assets/img/logo.svg" alt="insucom" className="w-full h-full object-contain" style={logoStyle} />
+                  <img src={mediaUrl('logo.svg')} alt="insucom" className="w-full h-full object-contain" style={logoStyle} />
                 </div>
               </Link>
               {/* Desktop Nav */}
@@ -149,7 +150,7 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
               <nav className="nav-wrapper mobile-nav-wrapper block lg:hidden">
                 <div className="mobile-drawer">
                   <div className="mobile-wid w-[310px] bg-white fixed top-0 h-full px-8 pt-10" style={{ zIndex: 99999 }}>
-                    <div className="flex justify-center mb-10"><div className="logo-area w-[180px] h-[55px]"><img src="/assets/img/logo.svg" alt="insucom" className="w-full h-full object-contain" /></div></div>
+                    <div className="flex justify-center mb-10"><div className="logo-area w-[180px] h-[55px]"><img src={mediaUrl('logo.svg')} alt="insucom" className="w-full h-full object-contain" /></div></div>
                     <ul className="flex flex-col mb-10">
                       <li><Link href="/"><span>Home</span></Link></li>
                       <li><Link href="/login"><span className="font-bold text-[#028835]">Login / Portal</span></Link></li>

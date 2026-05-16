@@ -4,6 +4,7 @@ import PageBanner from '@/components/PageBanner';
 import { apiService } from '@/lib/api';
 import { BlogListItem } from '@/types';
 import ClientSlider from '@/components/ClientSlider';
+import { mediaUrl } from '@/lib/media';
 
 async function getBlogs() {
   try {
@@ -19,7 +20,7 @@ const staticBlogs = [
     title: 'Giving You the Power to Protect Your Loved Ones and Secure Your Financial Future', 
     category: 'Insurance', 
     date: 'October 19, 2022', 
-    img: '/assets/img/blog-b-1.png', 
+    img: mediaUrl('blog-b-1.png'), 
     slug: 'giving-power', 
     excerpt: 'Aliquam eros justo, posuere loborti viverra lao ullamcorper posuere viverra .Aliquam eros justo, posuere Aliquam eros justo, posuere loborti viverra lao ullamcorper posuere viverra.'
   },
@@ -27,7 +28,7 @@ const staticBlogs = [
     title: 'A Name You Can Trust in Insurance, With a Proven Track Record of Excellence and Reliability', 
     category: 'Life', 
     date: 'October 20, 2022', 
-    img: '/assets/img/blog-b-2.png', 
+    img: mediaUrl('blog-b-2.png'), 
     slug: 'name-you-trust', 
     excerpt: 'Aliquam eros justo, posuere loborti viverra lao ullamcorper posuere viverra .Aliquam eros justo, posuere Aliquam eros justo, posuere loborti viverra lao ullamcorper posuere viverra.'
   },
@@ -35,7 +36,7 @@ const staticBlogs = [
     title: 'Your Pathway to a More Secure and Protected Life with Comprehensive Insurance Coverage', 
     category: 'Claims', 
     date: 'October 21, 2022', 
-    img: '/assets/img/blog-b-3.png', 
+    img: mediaUrl('blog-b-3.png'), 
     slug: 'pathway-secure', 
     excerpt: 'Aliquam eros justo, posuere loborti viverra lao ullamcorper posuere viverra .Aliquam eros justo, posuere Aliquam eros justo, posuere loborti viverra lao ullamcorper posuere viverra.'
   },
@@ -51,7 +52,7 @@ export default async function BlogPage() {
     title: b.title,
     category: typeof b.category === 'object' ? (b.category as any).name : b.category,
     date: b.published_at ? new Date(b.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'October 19, 2022',
-    img: b.cover_image_url || '/assets/img/blog-b-1.png',
+    img: b.cover_image_url || mediaUrl('blog-b-1.png'),
     slug: b.slug,
     excerpt: 'Aliquam eros justo, posuere loborti viverra lao ullamcorper posuere viverra .Aliquam eros justo, posuere Aliquam eros justo, posuere loborti viverra lao ullamcorper posuere viverra.'
   })) : staticBlogs.map((s, i) => ({ ...s, id: i }));
@@ -166,7 +167,7 @@ export default async function BlogPage() {
                       {[1, 2].map((num) => (
                         <div key={num} className="swiper-slide">
                           <div 
-                            style={{ backgroundImage: `url('/assets/img/blog-sidebar-thumb-${num}.png')` }}
+                            style={{ backgroundImage: `url(${mediaUrl(`blog-sidebar-thumb-${num}.png`)})` }}
                             className="w-full h-[268px] rounded flex items-end bg-no-repeat bg-cover p-[30px] mt-5 relative"
                           >
                             <div className="absolute inset-0 bg-black/20 rounded"></div>
