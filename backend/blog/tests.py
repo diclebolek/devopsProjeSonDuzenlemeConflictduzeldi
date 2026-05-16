@@ -93,6 +93,24 @@ class BlogAPITests(TestCase):
         # API'nin frontend'e döndüğü link ile bizim ham Azure linkimizin birebir aynı olduğunu doğrular
         self.assertEqual(r.data["cover_image_url"], azure_url)
 
+    def test_blog_serializer_resolves_relative_path_to_azure(self):
+        """./assets/img/... yolları Azure Blob tam URL'sine çevrilir."""
+        BlogPost.objects.create(
+            category=self.category,
+            title="Relative Path Post",
+            slug="relative-path-post",
+            body="Body",
+            cover_image_path="./assets/img/blog-b-1.png",
+            is_published=True,
+            published_at=timezone.now(),
+        )
+        r = self.client.get(reverse("blog-detail", kwargs={"slug": "relative-path-post"}))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(
+            r.data["cover_image_url"],
+            "https://insucomstorage.blob.core.windows.net/medya/blog-b-1.png",
+        )
+
 
 class BlogModelTests(TestCase):
     def test_approved_comment_count_property(self):
