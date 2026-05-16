@@ -30,6 +30,12 @@ class ServiceListSerializer(serializers.ModelSerializer):
     def get_icon_url(self, obj):
         if not obj.icon_path:
             return ""
+        
+        # --- AZURE BLOB STORAGE KORUMASI ---
+        # Eğer veritabanındaki yol zaten bir canlı internet linkiyse (https://...), doğrudan onu döndür.
+        if obj.icon_path.startswith(('http://', 'https://')):
+            return obj.icon_path
+            
         normalized_path = obj.icon_path[1:] if obj.icon_path.startswith("./") else obj.icon_path
         request = self.context.get("request")
         if request is None:
@@ -64,6 +70,12 @@ class ServiceDetailSerializer(serializers.ModelSerializer):
     def get_icon_url(self, obj):
         if not obj.icon_path:
             return ""
+        
+        # --- AZURE BLOB STORAGE KORUMASI ---
+        # Eğer veritabanındaki yol zaten bir canlı internet linkiyse (https://...), doğrudan onu döndür.
+        if obj.icon_path.startswith(('http://', 'https://')):
+            return obj.icon_path
+            
         normalized_path = obj.icon_path[1:] if obj.icon_path.startswith("./") else obj.icon_path
         request = self.context.get("request")
         if request is None:
