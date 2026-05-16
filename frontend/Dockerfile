@@ -8,7 +8,8 @@ RUN npm ci
 
 # Build
 COPY . .
-ARG NEXT_PUBLIC_API_URL=https://insucomsigorta.site/api
+# [Değişiklik] Varsayılan adresi sunucu .env dosyası ile eşitledim (Gerekirse sonuna /api ekleyin)
+ARG NEXT_PUBLIC_API_URL=https://www.insucomsigorta.site/api
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 RUN npm run build
 
@@ -17,6 +18,10 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+
+# [Kritik Eksik Tamamlandı] Sunucu tarafındaki (SSR) isteklerin de adresi görebilmesi için buraya da ekledik
+ARG NEXT_PUBLIC_API_URL=https://www.insucomsigorta.site/api
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
 # Copy original package.json to prevent ERR_INVALID_PACKAGE_CONFIG
 COPY --from=base /app/package.json ./
