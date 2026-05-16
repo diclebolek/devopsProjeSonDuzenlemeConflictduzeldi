@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import Link from 'next/link';
 import PageBanner from '@/components/PageBanner';
 import { apiService } from '@/lib/api';
@@ -17,14 +18,16 @@ const recentPosts = [
 ];
 const tags = ['Insurance', 'Life Insurance', 'Health', 'Property', 'Auto', 'Business', 'Cyber', 'Claims'];
 
-export default async function BlogDetailPage({ params }: { params: { slug: string } }) {
-  const blog = await getBlog(params.slug);
+export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const blog = await getBlog(slug);
   const title = blog?.title || 'Giving You the Power to Protect Your Loved Ones and Secure Your Financial Future';
   const content = blog?.content || 'Aliquam eros posuere loborti viverra laoree ullamcorper posuere viverra eros justo, posuere lobo viverra laoreet augue mattis fermentum ullamcorper viverra. Aliquam eros justo, posuere loborti viverra laoreet matti ullamcorper posuere viverra. Aliquam eros justo, posuere lobortis non, viverra laoreet augue mattis fermentum ullamcorper viverra.';
   const img = blog?.cover_image_url || '/assets/img/blog-details.png';
   const author = blog?.author || 'Admin';
   const date = blog?.published_at ? new Date(blog.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'October 19, 2022';
   const category = blog?.category ? (typeof blog.category === 'object' ? blog.category.name : blog.category) : 'Insurance';
+
 
   return (
     <>
@@ -51,6 +54,13 @@ export default async function BlogDetailPage({ params }: { params: { slug: strin
                   <img src={img} alt={title} className="w-full h-full object-cover" />
                 </div>
                 <p className="text-base leading-[27px] text-primary-100 mb-2.5">{content}</p>
+                {/* Blockquote */}
+                <div className="border-l-4 border-primary-500 bg-primary-50 pl-6 pr-4 py-5 my-8 rounded-r">
+                  <p className="text-lg text-primary-900 font-semibold spline-sans leading-8 italic">
+                    &ldquo;Insurance is not just about protecting assets — it&apos;s about securing peace of mind and enabling you to live life fully without fear of the unexpected.&rdquo;
+                  </p>
+                  <span className="text-sm text-primary-500 font-bold mt-2 block">— Insurance Expert</span>
+                </div>
                 <p className="text-base leading-[27px] text-primary-100 mb-[60px]">Aliquam eros justo, posuere loborti viverra laoreet matti ullamcorper posuere viverra. Aliquam eros justo, posuere lobortis non, viverra laoreet augue mattis fermentum ullamcorper viverra laoreet.</p>
                 <div className="sm:flex sm:space-x-[30px] mb-5">
                   <div className="sm:w-2/3 mb-5 sm:mb-0">
@@ -221,6 +231,24 @@ export default async function BlogDetailPage({ params }: { params: { slug: strin
                     </div>
                   </div>
                 </ClientSlider>
+              </div>
+              {/* Categories */}
+              <div className="w-full mb-[30px]">
+                <p className="text-lg leading-7 spline-sans font-bold text-primary-900 mb-[30px]">Categories</p>
+                <div className="flex flex-col space-y-2">
+                  {[
+                    { name: 'Life Insurance', count: 5 },
+                    { name: 'Travel Insurance', count: 3 },
+                    { name: 'Health Insurance', count: 7 },
+                    { name: 'Property Protection', count: 4 },
+                    { name: 'Auto Insurance', count: 6 },
+                  ].map((cat) => (
+                    <a key={cat.name} href="#" className="flex justify-between items-center px-4 py-3 border border-primaryBorder rounded hover:bg-primary-500 hover:border-primary-500 group common-trans">
+                      <span className="text-sm text-primary-900 group-hover:text-white font-medium common-trans">{cat.name}</span>
+                      <span className="text-xs text-primary-100 group-hover:text-white common-trans">({cat.count})</span>
+                    </a>
+                  ))}
+                </div>
               </div>
               {/* Recent Posts */}
               <div className="w-full mb-[30px]">

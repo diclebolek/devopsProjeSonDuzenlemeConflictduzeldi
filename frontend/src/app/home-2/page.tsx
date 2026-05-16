@@ -263,8 +263,8 @@ export default function HomeTwo() {
                          <span className="flex items-center space-x-1"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>{post.date}</span></span>
                          <span className="flex items-center space-x-1"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>By Admin</span></span>
                       </div>
-                      <h3 className="text-xl font-bold text-primary-900 mb-4 group-hover:text-primary-500 transition-colors"><a href="/blog/details">{post.title}</a></h3>
-                      <a href="/blog/details" className="text-primary-900 font-bold border-b-2 border-primary-500 hover:text-primary-500 transition-colors pb-1">Read More</a>
+                      <h3 className="text-xl font-bold text-primary-900 mb-4 group-hover:text-primary-500 transition-colors"><a href="/blog/giving-power">{post.title}</a></h3>
+                      <a href="/blog/giving-power" className="text-primary-900 font-bold border-b-2 border-primary-500 hover:text-primary-500 transition-colors pb-1">Read More</a>
                    </div>
                  ))}
               </div>

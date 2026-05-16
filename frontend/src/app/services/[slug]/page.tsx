@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import Link from 'next/link';
 import PageBanner from '@/components/PageBanner';
 import { apiService } from '@/lib/api';
@@ -33,8 +34,9 @@ async function getService(slug: string) {
   }
 }
 
-export default async function ServiceDetailPage({ params }: { params: { slug: string } }) {
-  const service = await getService(params.slug);
+export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const service = await getService(slug);
 
   const title = service?.title || 'Risk Assessment';
   const description = service?.description || 'Aliquam eros justo, posuere loborti viverra laoreet ullamcorper posuere viverra .Aliquam eros justo, posuere lobortis non viverra laoreet augue mattis fermentum ullamcorper viverra laoreet.';

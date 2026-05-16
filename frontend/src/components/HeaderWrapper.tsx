@@ -4,6 +4,7 @@ import Header from './Header';
 
 export default function HeaderWrapper() {
   const pathname = usePathname();
-  const isHome = pathname === '/' || pathname === '/home-2';
+  const isAuthPage = pathname === '/login' || pathname === '/register';
+  if (isAuthPage) return null;
   return <Header variant="dark" />;
 }

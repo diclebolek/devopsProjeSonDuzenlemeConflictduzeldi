@@ -1,23 +1,35 @@
 services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: insucom
+      POSTGRES_USER: insucom
+      POSTGRES_PASSWORD: insucom
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
   backend:
     build: ./backend
     env_file:
       - ./backend/.env
-    environment:
-      # Azure SSL gerektirir, bunu eklemek hayat kurtarır
-      POSTGRES_SSLMODE: require 
     ports:
       - "8000:8000"
+    depends_on:
+      - db
 
   frontend:
     build:
       context: ./frontend
-      # Next.js build aşamasında API adresini bilmek ister
       args:
-        - NEXT_PUBLIC_API_URL=http://20.238.6.4:8000/api
+        - NEXT_PUBLIC_API_URL=http://localhost:8000/api
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://20.238.6.4:8000/api
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api
     depends_on:
       - backend
+
+volumes:
+  pgdata:

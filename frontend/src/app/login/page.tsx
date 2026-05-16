@@ -94,7 +94,8 @@ export default function LoginPage() {
               id="login-submit"
               type="submit"
               disabled={status === 'loading'}
-              className="w-full h-12 bg-[#028835] hover:bg-[#004C3F] text-white font-bold rounded-xl shadow-lg shadow-[#028835]/20 transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+              style={{ backgroundColor: status === 'loading' ? '#004C3F' : '#028835' }}
+              className="w-full h-12 text-white font-bold rounded-xl shadow-lg transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed hover:opacity-90"
             >
               {status === 'loading' ? 'Giriş Yapılıyor...' : 'Giriş Yap'}
             </button>
@@ -103,7 +104,7 @@ export default function LoginPage() {
           <div className="mt-8 pt-6 border-t border-gray-50 text-center">
             <p className="text-sm text-[#677471]">
               Hesabınız yok mu?{' '}
-              <Link href="/contact" className="text-[#028835] font-bold hover:underline">Bize ulaşın</Link>
+              <Link id="register-link" href="/register" className="text-[#028835] font-bold hover:underline">Kayıt Olun</Link>
             </p>
             <Link href="/" className="inline-block mt-4 text-xs text-[#677471] hover:text-[#028835] transition-colors">
               ← Ana Sayfaya Dön
